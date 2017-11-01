@@ -1358,7 +1358,7 @@ int i915_guc_ipts_submission_enable(struct drm_i915_private *dev_priv,
 	/* client for execbuf submission */
 	client = guc_client_alloc(dev_priv,
 				  INTEL_INFO(dev_priv)->ring_mask,
-				  GUC_CLIENT_PRIORITY_KMD_NORMAL,
+				  GUC_CLIENT_PRIORITY_NORMAL,
 				  ctx);
 	if (!client) {
 		DRM_ERROR("Failed to create normal GuC client!\n");
