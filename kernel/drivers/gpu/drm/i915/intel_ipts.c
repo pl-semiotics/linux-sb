@@ -174,6 +174,7 @@ static int create_ipts_context(void)
 	struct i915_gem_context *ipts_ctx = NULL;
 	struct drm_i915_private *dev_priv = intel_ipts.dev->dev_private;
 	int ret = 0;
+	struct intel_ring *pin_ret;
 
 	/* Initialize the context right away.*/
 	ret = i915_mutex_lock_interruptible(intel_ipts.dev);
@@ -196,8 +197,8 @@ static int create_ipts_context(void)
 		goto err_ctx;
 	}
 
-	ret = execlists_context_pin(dev_priv->engine[RCS], ipts_ctx);
-	if (ret) {
+	pin_ret = execlists_context_pin(dev_priv->engine[RCS], ipts_ctx);
+	if (IS_ERR(pin_ret)) {
 		DRM_DEBUG("lr context pinning failed : %d\n", ret);
 		goto err_ctx;
 	}
